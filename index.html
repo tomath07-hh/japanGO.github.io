@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>關西五日 · 大阪・京都・嵐山</title>
+<style>
+  :root{
+    --ink:#1a1410;
+    --paper:#f5efe3;
+    --paper-warm:#ede4d2;
+    --vermilion:#c8442b;
+    --vermilion-deep:#9e2f1c;
+    --gold:#b08642;
+    --moss:#5c6b4a;
+    --sumi:#3a322a;
+    --hairline:#d4c6ac;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Noto Serif TC","Songti TC",serif;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--vermilion);color:var(--paper)}
+  img{display:block;max-width:100%}
+
+  /* ---- Version Switch Button ---- */
+  .ver-switch{
+    position:fixed;
+    top:clamp(1rem,3vw,1.6rem);
+    left:clamp(1rem,3vw,1.6rem);
+    z-index:50;
+    display:inline-flex;
+    align-items:center;
+    gap:.4em;
+    padding:.55em 1.1em;
+    background:var(--vermilion);
+    color:var(--paper);
+    font-family:"Noto Serif TC","Songti TC",serif;
+    font-size:clamp(.8rem,1.6vw,.95rem);
+    letter-spacing:.08em;
+    text-decoration:none;
+    border-radius:6px;
+    box-shadow:0 4px 14px rgba(158,47,28,.28);
+    transition:background .2s ease, transform .2s ease;
+  }
+  .ver-switch:hover{
+    background:var(--vermilion-deep);
+    transform:translateY(-2px);
+  }
+  .ver-switch::before{content:"›";font-size:1.2em;line-height:1}
+
+  /* ---- Hero ---- */
+  .hero{
+    position:relative;
+    padding:clamp(3rem,9vw,7rem) clamp(1.5rem,6vw,5rem) clamp(2.5rem,6vw,5rem);
+    border-bottom:1px solid var(--hairline);
+    overflow:hidden;
+  }
+  .hero-seal{
+    position:absolute;
+    top:clamp(1.5rem,5vw,3.5rem);
+    right:clamp(1.5rem,5vw,4rem);
+    width:clamp(64px,11vw,104px);
+    height:clamp(64px,11vw,104px);
+    background:var(--vermilion);
+    color:var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:6px;
+    font-size:clamp(1.1rem,2.4vw,1.7rem);
+    letter-spacing:.15em;
+    line-height:1.15;
+    font-weight:700;
+    box-shadow:2px 3px 0 var(--vermilion-deep);
+    writing-mode:vertical-rl;
+    padding:.6rem;
+  }
+  .eyebrow{
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.78rem;
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:var(--vermilion-deep);
+    margin-bottom:1.4rem;
+    font-weight:600;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem,8vw,5.4rem);
+    font-weight:900;
+    line-height:1.05;
+    letter-spacing:.02em;
+    margin-bottom:1.2rem;
+  }
+  .hero h1 .yr{
+    display:block;
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:clamp(.85rem,2vw,1.1rem);
+    font-weight:400;
+    letter-spacing:.3em;
+    color:var(--gold);
+    margin-bottom:.9rem;
+  }
+  .hero-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1.4rem 2.6rem;
+    margin-top:2rem;
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.92rem;
+    color:var(--sumi);
+  }
+  .hero-meta div span{
+    display:block;
+    font-size:.7rem;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:.25rem;
+  }
+  .hero-meta div strong{font-weight:700;font-size:1.05rem}
+
+  /* ---- Route rail ---- */
+  .railway{
+    background:var(--sumi);
+    color:var(--paper-warm);
+    padding:1.4rem clamp(1.5rem,6vw,5rem);
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:.7rem 1rem;
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.9rem;
+    letter-spacing:.06em;
+  }
+  .railway .stop{display:flex;align-items:center;gap:.5rem}
+  .railway .dot{width:9px;height:9px;border-radius:50%;background:var(--vermilion);flex-shrink:0}
+  .railway .arr{color:var(--gold);font-size:.8rem}
+
+  /* ---- Days ---- */
+  main{
+    max-width:940px;
+    margin:0 auto;
+    padding:clamp(2.5rem,7vw,5rem) clamp(1.5rem,5vw,2rem) 4rem;
+  }
+  .day{
+    position:relative;
+    padding:clamp(2rem,5vw,3rem) 0 clamp(2.5rem,5vw,3.5rem);
+    border-bottom:1px solid var(--hairline);
+    scroll-margin-top:1rem;
+  }
+  .day:last-of-type{border-bottom:none}
+  .day-head{
+    display:flex;
+    align-items:baseline;
+    gap:1.2rem;
+    margin-bottom:1.8rem;
+    flex-wrap:wrap;
+  }
+  .day-num{
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.72rem;
+    letter-spacing:.3em;
+    color:var(--vermilion-deep);
+    font-weight:700;
+    border:1.5px solid var(--vermilion);
+    border-radius:50%;
+    width:3.3rem;
+    height:3.3rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    flex-shrink:0;
+    line-height:1.1;
+  }
+  .day-num b{font-size:1.25rem;font-family:"Noto Serif TC",serif}
+  .day-title h2{
+    font-size:clamp(1.7rem,4.5vw,2.4rem);
+    font-weight:800;
+    line-height:1.15;
+  }
+  .day-title .sub{
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.85rem;
+    letter-spacing:.18em;
+    color:var(--moss);
+    margin-top:.35rem;
+    font-weight:500;
+  }
+  .day-date{
+    margin-left:auto;
+    font-family:"Noto Sans TC",sans-serif;
+    text-align:right;
+    font-size:.8rem;
+    letter-spacing:.12em;
+    color:var(--sumi);
+  }
+  .day-date b{display:block;font-size:1.5rem;color:var(--ink);font-family:"Noto Serif TC",serif}
+
+  /* ---- Timetable ---- */
+  .schedule{
+    background:var(--paper-warm);
+    border-radius:6px;
+    padding:.4rem 0;
+    margin-bottom:2rem;
+    font-family:"Noto Sans TC",sans-serif;
+  }
+  .sched-row{
+    display:grid;
+    grid-template-columns:5.2rem 1fr auto;
+    gap:.8rem;
+    align-items:baseline;
+    padding:.55rem 1.1rem;
+    font-size:.88rem;
+    border-bottom:1px solid rgba(176,134,66,.18);
+  }
+  .sched-row:last-child{border-bottom:none}
+  .sched-row .t{
+    font-weight:700;
+    color:var(--vermilion-deep);
+    letter-spacing:.04em;
+    font-feature-settings:"tnum";
+  }
+  .sched-row .a{color:var(--ink)}
+  .sched-row .d{
+    color:var(--moss);
+    font-size:.78rem;
+    text-align:right;
+    white-space:nowrap;
+  }
+  .sched-row.move{background:rgba(92,107,74,.07)}
+  .sched-row.move .a{color:var(--moss);font-style:italic}
+
+  /* ---- Spots ---- */
+  .spots{margin-top:.5rem}
+  .spot{
+    display:grid;
+    grid-template-columns:160px 1fr;
+    gap:1.3rem;
+    margin-bottom:1.6rem;
+    align-items:start;
+  }
+  .spot-photo{
+    border-radius:6px;
+    overflow:hidden;
+    aspect-ratio:4/3;
+    background:var(--paper-warm);
+    box-shadow:0 2px 10px rgba(58,50,42,.12);
+  }
+  .spot-photo img{width:100%;height:100%;object-fit:cover}
+  .spot-body h3{
+    font-size:1.18rem;
+    font-weight:700;
+    display:flex;
+    align-items:baseline;
+    gap:.7rem;
+    flex-wrap:wrap;
+  }
+  .spot-body h3 .rom{
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.72rem;
+    letter-spacing:.15em;
+    color:var(--gold);
+    font-weight:500;
+  }
+  .spot-body h3 .stay{
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.72rem;
+    letter-spacing:.05em;
+    color:var(--vermilion-deep);
+    background:var(--paper-warm);
+    padding:.1rem .5rem;
+    border-radius:20px;
+    font-weight:600;
+  }
+  .spot-body p{
+    font-size:.95rem;
+    color:var(--sumi);
+    margin-top:.4rem;
+    max-width:60ch;
+  }
+  .tip{
+    display:inline-block;
+    margin-top:.6rem;
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.8rem;
+    background:var(--paper-warm);
+    border-left:3px solid var(--gold);
+    padding:.45rem .8rem;
+    color:var(--sumi);
+    letter-spacing:.02em;
+  }
+  .tip b{color:var(--vermilion-deep)}
+
+  .note-pick{
+    background:var(--paper-warm);
+    border:1px dashed var(--vermilion);
+    border-radius:4px;
+    padding:1rem 1.2rem;
+    margin-top:1.2rem;
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.84rem;
+    color:var(--sumi);
+  }
+  .note-pick b{color:var(--vermilion-deep)}
+
+  .photo-credit{
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.62rem;
+    color:var(--gold);
+    margin-top:.25rem;
+    letter-spacing:.04em;
+    opacity:.8;
+  }
+  .hop{
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+    margin:0 0 1.6rem 0;
+    padding-left:.2rem;
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.8rem;
+    color:var(--moss);
+    letter-spacing:.02em;
+  }
+  .hop::before{
+    content:"";
+    flex-shrink:0;
+    width:22px;height:22px;
+    border-radius:50%;
+    background:var(--paper-warm);
+    border:1.5px solid var(--moss);
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235c6b4a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 5v14M5 12l7 7 7-7'/></svg>");
+    background-repeat:no-repeat;
+    background-position:center;
+  }
+  .hop b{color:var(--vermilion-deep);font-weight:600}
+  .hop .min{
+    margin-left:auto;
+    background:var(--paper-warm);
+    padding:.1rem .55rem;
+    border-radius:20px;
+    font-size:.72rem;
+    color:var(--sumi);
+    white-space:nowrap;
+  }
+  @media (max-width:600px){
+    .hop .min{margin-left:.4rem}
+  }
+
+  /* ---- Footer ---- */
+  footer{
+    background:var(--sumi);
+    color:var(--paper-warm);
+    padding:clamp(2.5rem,6vw,4rem) clamp(1.5rem,6vw,5rem);
+    font-family:"Noto Sans TC",sans-serif;
+  }
+  footer h4{
+    font-size:.78rem;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:1.3rem;
+  }
+  .tips-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.4rem 2.2rem;
+  }
+  .tips-grid div{font-size:.9rem;line-height:1.7}
+  .tips-grid div strong{display:block;color:var(--vermilion);margin-bottom:.3rem;letter-spacing:.05em}
+  .sign{
+    margin-top:2.5rem;
+    padding-top:1.5rem;
+    border-top:1px solid rgba(255,255,255,.15);
+    font-size:.8rem;
+    letter-spacing:.12em;
+    color:var(--hairline);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:.5rem;
+  }
+
+  /* ---- Overview table ---- */
+  .overview{
+    margin-bottom:clamp(2.5rem,6vw,4rem);
+  }
+  .overview h2{
+    font-size:clamp(1.4rem,3.5vw,1.9rem);
+    font-weight:800;
+    margin-bottom:.3rem;
+  }
+  .overview .ov-sub{
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.82rem;
+    letter-spacing:.16em;
+    color:var(--moss);
+    margin-bottom:1.4rem;
+  }
+  .ov-table{
+    border:1px solid var(--hairline);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .ov-row{
+    display:grid;
+    grid-template-columns:3.6rem 1fr 1.4fr;
+    border-bottom:1px solid var(--hairline);
+    text-decoration:none;
+    color:inherit;
+    transition:background .15s ease;
+  }
+  .ov-row:last-child{border-bottom:none}
+  .ov-row:hover,.ov-row:focus-visible{background:var(--paper-warm);outline:none}
+  .ov-head{
+    background:var(--sumi);
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.7rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .ov-head > div{padding:.7rem 1rem}
+  .ov-cell{padding:.85rem 1rem;display:flex;flex-direction:column;justify-content:center}
+  .ov-day{
+    background:var(--vermilion);
+    color:var(--paper);
+    align-items:center;
+    text-align:center;
+    font-family:"Noto Sans TC",sans-serif;
+  }
+  .ov-day .dn{font-size:.62rem;letter-spacing:.15em;opacity:.85}
+  .ov-day .dd{font-size:1.35rem;font-weight:700;font-family:"Noto Serif TC",serif;line-height:1.1}
+  .ov-day .dw{font-size:.6rem;opacity:.85}
+  .ov-route{border-left:1px solid var(--hairline)}
+  .ov-route .rt{font-weight:700;font-size:1rem}
+  .ov-route .rs{
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.7rem;
+    letter-spacing:.12em;
+    color:var(--gold);
+    margin-top:.15rem;
+  }
+  .ov-route .stay-tag{
+    display:inline-block;
+    margin-top:.35rem;
+    font-family:"Noto Sans TC",sans-serif;
+    font-size:.68rem;
+    color:var(--moss);
+    background:var(--paper-warm);
+    padding:.08rem .45rem;
+    border-radius:20px;
+    letter-spacing:.03em;
+  }
+  .ov-spots{
+    border-left:1px solid var(--hairline);
+    font-size:.86rem;
+    color:var(--sumi);
+    line-height:1.6;
+  }
+  .ov-arrow{color:var(--vermilion-deep);font-weight:700;padding:0 .15em}
+
+  @media (max-width:600px){
+    .day-date{margin-left:0;width:100%;text-align:left;display:flex;gap:.6rem;align-items:baseline}
+    .day-date b{font-size:1.2rem}
+    .spot{grid-template-columns:1fr;gap:.7rem}
+    .spot-photo{aspect-ratio:16/9;max-height:200px}
+    .sched-row{grid-template-columns:4.6rem 1fr;gap:.5rem}
+    .sched-row .d{grid-column:1/-1;text-align:left;padding-left:5.1rem}
+    .ov-row{grid-template-columns:3rem 1fr}
+    .ov-head{display:none}
+    .ov-spots{grid-column:1/-1;border-left:none;border-top:1px dashed var(--hairline);padding-top:.6rem}
+    .ov-cell{padding:.7rem .85rem}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .day{opacity:0;transform:translateY(18px);animation:rise .7s ease forwards}
+    #day1{animation-delay:.05s}
+    #day2{animation-delay:.12s}
+    #day3{animation-delay:.19s}
+    #day4{animation-delay:.26s}
+    #day5{animation-delay:.33s}
+    @keyframes rise{to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+
+<a class="ver-switch" href="osaka_kyoto_2026_itinerary_guest_ready.html">顯示版本二</a>
+
+<header class="hero">
+  <div class="hero-seal">關西</div>
+  <div class="eyebrow">Kansai · Five Days</div>
+  <h1>
+    <span class="yr">2026 · 6/16 — 6/20</span>
+    大阪 ・ 京都<br>嵐山 慢旅
+  </h1>
+  <div class="hero-meta">
+    <div><span>Duration</span><strong>5 天 4 夜</strong></div>
+    <div><span>Stay</span><strong>難波 2 晚 ・ 四條河原町 2 晚</strong></div>
+    <div><span>Arrival</span><strong>6/16 14:00 抵達</strong></div>
+    <div><span>Departure</span><strong>6/20 15:00 起飛</strong></div>
+  </div>
+</header>
+
+<div class="railway">
+  <span class="stop"><span class="dot"></span>難波</span><span class="arr">→</span>
+  <span class="stop"><span class="dot"></span>東山</span><span class="arr">→</span>
+  <span class="stop"><span class="dot"></span>京都經典</span><span class="arr">→</span>
+  <span class="stop"><span class="dot"></span>嵐山</span><span class="arr">→</span>
+  <span class="stop"><span class="dot"></span>關西機場</span>
+</div>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <section class="overview">
+    <h2>五日行程簡表</h2>
+    <div class="ov-sub">AT A GLANCE · 點選任一天可跳至詳細行程</div>
+    <div class="ov-table">
+      <div class="ov-row ov-head">
+        <div>Day</div>
+        <div>主題・區域</div>
+        <div>主要景點</div>
+      </div>
+      <a class="ov-row" href="#day1">
+        <div class="ov-cell ov-day"><span class="dn">DAY</span><span class="dd">1</span><span class="dw">6/16 二</span></div>
+        <div class="ov-cell ov-route"><span class="rt">抵達・難波初夜</span><span class="rs">OSAKA NAMBA</span><span class="stay-tag">宿・難波</span></div>
+        <div class="ov-cell ov-spots">心齋橋<span class="ov-arrow">→</span>道頓堀（午後落地，輕鬆夜遊）</div>
+      </a>
+      <a class="ov-row" href="#day2">
+        <div class="ov-cell ov-day"><span class="dn">DAY</span><span class="dd">2</span><span class="dw">6/17 三</span></div>
+        <div class="ov-cell ov-route"><span class="rt">京都東山</span><span class="rs">HIGASHIYAMA</span><span class="stay-tag">宿・四條河原町</span></div>
+        <div class="ov-cell ov-spots">清水寺<span class="ov-arrow">→</span>二年坂<span class="ov-arrow">→</span>八坂神社<span class="ov-arrow">→</span>祇園</div>
+      </a>
+      <a class="ov-row" href="#day3">
+        <div class="ov-cell ov-day"><span class="dn">DAY</span><span class="dd">3</span><span class="dw">6/18 四</span></div>
+        <div class="ov-cell ov-route"><span class="rt">千本鳥居・金閣</span><span class="rs">FUSHIMI · KINKAKU</span><span class="stay-tag">宿・四條河原町</span></div>
+        <div class="ov-cell ov-spots">伏見稻荷<span class="ov-arrow">→</span>錦市場<span class="ov-arrow">→</span>金閣寺</div>
+      </a>
+      <a class="ov-row" href="#day4">
+        <div class="ov-cell ov-day"><span class="dn">DAY</span><span class="dd">4</span><span class="dw">6/19 五</span></div>
+        <div class="ov-cell ov-route"><span class="rt">嵐山＋回阪採買</span><span class="rs">ARASHIYAMA</span><span class="stay-tag">宿・難波</span></div>
+        <div class="ov-cell ov-spots">竹林<span class="ov-arrow">→</span>天龍寺<span class="ov-arrow">→</span>渡月橋<span class="ov-arrow">→</span>大阪購物</div>
+      </a>
+      <a class="ov-row" href="#day5">
+        <div class="ov-cell ov-day"><span class="dn">DAY</span><span class="dd">5</span><span class="dw">6/20 六</span></div>
+        <div class="ov-cell ov-route"><span class="rt">難波・賦歸</span><span class="rs">NAMBA → KIX</span><span class="stay-tag">賦歸</span></div>
+        <div class="ov-cell ov-spots">難波最後採買<span class="ov-arrow">→</span>關西機場（15:00 班機）</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- DAY 1 -->
+  <section class="day" id="day1">
+    <div class="day-head">
+      <div class="day-num">DAY<b>1</b></div>
+      <div class="day-title">
+        <h2>抵達・難波初夜</h2>
+        <div class="sub">OSAKA NAMBA · 心齋橋 · 道頓堀</div>
+      </div>
+      <div class="day-date"><span>六月</span><b>16</b><span>週二</span></div>
+    </div>
+
+    <div class="schedule">
+      <div class="sched-row move"><span class="t">14:00</span><span class="a">關西機場入境（通關＋提行李）</span><span class="d">約 40–50 分</span></div>
+      <div class="sched-row move"><span class="t">14:50</span><span class="a">南海電車 → 難波</span><span class="d">rapi:t 約 38 分</span></div>
+      <div class="sched-row"><span class="t">15:40</span><span class="a">飯店寄放行李（難波住宿）</span><span class="d">約 30 分</span></div>
+      <div class="sched-row"><span class="t">16:15</span><span class="a">心齋橋筋商店街</span><span class="d">約 1.5 小時</span></div>
+      <div class="sched-row"><span class="t">17:45</span><span class="a">道頓堀（晚餐＋夜景）</span><span class="d">約 2.5 小時</span></div>
+      <div class="sched-row"><span class="t">20:30</span><span class="a">回難波飯店休息（住難波）</span><span class="d">—</span></div>
+    </div>
+
+    <div class="spots">
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shinsaibashi-suji%20201408.JPG?width=480" alt="心齋橋筋商店街" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>心齋橋筋商店街 <span class="rom">Shinsaibashi</span> <span class="stay">停留 1.5 小時</span></h3>
+          <p>長約 600 公尺的有頂商店街，從藥妝、服飾到百年老舖一字排開，是補貨與閒逛的最佳起點。落地當天定調輕鬆，動線全在步行範圍內。</p>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hop"><span><b>心齋橋</b> → 道頓堀：沿商店街向南步行，約 5–8 分鐘直達</span><span class="min">步行 5 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dotonbori_Glico_LED_signs_at_3rd_November_2014.JPG?width=480" alt="道頓堀固力高霓虹看板" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>道頓堀 <span class="rom">Dotonbori</span> <span class="stay">停留 2.5 小時</span></h3>
+          <p>固力果跑跑人看板與運河兩岸的巨型招牌，是大阪最具代表性的夜景。晚餐就交給章魚燒、大阪燒與串炸，一路吃過去。</p>
+          <span class="tip"><b>提示</b>　若班機午後才抵達，今日剛好順成「入住→晚餐→夜遊」，不必趕路。</span>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY 2 -->
+  <section class="day" id="day2">
+    <div class="day-head">
+      <div class="day-num">DAY<b>2</b></div>
+      <div class="day-title">
+        <h2>京都東山・古道散策</h2>
+        <div class="sub">HIGASHIYAMA · 清水寺 · 祇園</div>
+      </div>
+      <div class="day-date"><span>六月</span><b>17</b><span>週三</span></div>
+    </div>
+
+    <div class="schedule">
+      <div class="sched-row move"><span class="t">07:30</span><span class="a">難波 → 京都四條河原町（地鐵御堂筋線→淀屋橋轉京阪特急→祇園四條）</span><span class="d">約 50 分</span></div>
+      <div class="sched-row"><span class="t">08:30</span><span class="a">四條河原町飯店寄放行李</span><span class="d">約 20 分</span></div>
+      <div class="sched-row move"><span class="t">08:55</span><span class="a">四條河原町 → 清水道（市巴士 207 號）＋步行上坡</span><span class="d">約 25 分</span></div>
+      <div class="sched-row"><span class="t">09:20</span><span class="a">清水寺</span><span class="d">約 1.5 小時</span></div>
+      <div class="sched-row"><span class="t">10:50</span><span class="a">二年坂・三年坂</span><span class="d">約 1 小時</span></div>
+      <div class="sched-row"><span class="t">11:50</span><span class="a">午餐（祇園周邊）</span><span class="d">約 1 小時</span></div>
+      <div class="sched-row"><span class="t">12:50</span><span class="a">八坂神社</span><span class="d">約 40 分</span></div>
+      <div class="sched-row"><span class="t">13:30</span><span class="a">祇園・花見小路</span><span class="d">約 1 小時</span></div>
+      <div class="sched-row move"><span class="t">14:30</span><span class="a">祇園步行回四條河原町住宿（自由活動／咖啡）</span><span class="d">步行 10 分</span></div>
+    </div>
+
+    <div class="spots">
+      <div class="hop"><span><b>四條河原町（住宿）</b> → 清水寺：市巴士 207 號至「清水道」站下車，再沿清水坂步行上坡約 10 分</span><span class="min">巴士＋步行 25 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kiyomizu-dera%2CNioumon%20and%20Three-storied%20Pagoda.JPG?width=480" alt="清水寺仁王門與三重塔" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>清水寺 <span class="rom">Kiyomizu-dera</span> <span class="stay">停留 1.5 小時</span></h3>
+          <p>世界遺產、京都的象徵。懸於崖邊的「清水舞台」以木造工法撐起整座本堂，居高遠眺整片京都市景。</p>
+          <span class="tip"><b>提示</b>　建議早上 8 點前抵達，避開人潮也搶到最好的光線。207 號早上易塞，趕時間可改搭計程車約 10 分。</span>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hop"><span><b>清水寺</b> → 二年坂：出寺後沿坡道往下走，約 5 分鐘</span><span class="min">步行 5 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ninenzaka-kyoto.JPG?width=480" alt="二年坂石板坡道" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>二年坂・三年坂 <span class="rom">Ninen-zaka</span> <span class="stay">停留 1 小時</span></h3>
+          <p>通往清水寺的石板坡道，兩側保留京町家町並，茶屋、和菓子與雜貨錯落，是整段東山最上鏡的散步路段。</p>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hop"><span><b>二年坂</b> → 八坂神社：續行石塀小路接東大路，約 10 分鐘</span><span class="min">步行 10 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/JP-Kyoto-yasaka.JPG?width=480" alt="八坂神社西樓門" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>八坂神社 <span class="rom">Yasaka-jinja</span> <span class="stay">停留 40 分</span></h3>
+          <p>祇園的守護神社，朱紅西樓門立於四條通底端，成排燈籠氣勢十足，自古庇佑生意興隆與結緣。</p>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hop"><span><b>八坂神社</b> → 祇園：穿過四條通即進入花見小路，約 5 分鐘</span><span class="min">步行 5 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/JP-Kyoto-Gion-Area-Traditional-House-Night-View.JPG?width=480" alt="祇園花見小路" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>祇園・花見小路 <span class="rom">Gion</span> <span class="stay">停留 1 小時</span></h3>
+          <p>花見小路兩旁的木造茶屋風情凝練，傍晚最有味道，運氣好還能遇見趕赴宴席的藝舞妓身影。整條東山路線是順走的下坡石板路，全程步行不需搭車。</p>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY 3 -->
+  <section class="day" id="day3">
+    <div class="day-head">
+      <div class="day-num">DAY<b>3</b></div>
+      <div class="day-title">
+        <h2>千本鳥居・金閣輝映</h2>
+        <div class="sub">FUSHIMI · 錦市場 · 金閣寺</div>
+      </div>
+      <div class="day-date"><span>六月</span><b>18</b><span>週四</span></div>
+    </div>
+
+    <div class="schedule">
+      <div class="sched-row move"><span class="t">08:00</span><span class="a">祇園四條站 → 伏見稻荷站（京阪本線）＋步行</span><span class="d">約 20 分</span></div>
+      <div class="sched-row"><span class="t">08:30</span><span class="a">伏見稻荷大社（走到四辻折返）</span><span class="d">約 1.5 小時</span></div>
+      <div class="sched-row move"><span class="t">10:15</span><span class="a">伏見稻荷站 → 祇園四條站（京阪本線）＋步行至錦市場</span><span class="d">約 30 分</span></div>
+      <div class="sched-row"><span class="t">11:00</span><span class="a">錦市場（午餐＋逛）</span><span class="d">約 1.5 小時</span></div>
+      <div class="sched-row move"><span class="t">12:45</span><span class="a">四條河原町 → 金閣寺道（市巴士 59 號）</span><span class="d">約 40–50 分</span></div>
+      <div class="sched-row"><span class="t">13:40</span><span class="a">金閣寺</span><span class="d">約 1 小時</span></div>
+      <div class="sched-row move"><span class="t">15:00</span><span class="a">金閣寺道 → 四條河原町住宿（市巴士 59 號）</span><span class="d">約 40–50 分</span></div>
+    </div>
+
+    <div class="spots">
+      <div class="hop"><span><b>四條河原町（住宿）</b> → 伏見稻荷：步行至京阪「祇園四條」站，搭京阪本線往南至「伏見稻荷」站，出站步行 5 分</span><span class="min">電車 20 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Torii%20path%20with%20lantern%20at%20Fushimi%20Inari%20Taisha%20Shrine%2C%20Kyoto%2C%20Japan.jpg?width=480" alt="伏見稻荷大社千本鳥居" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>伏見稻荷大社 <span class="rom">Fushimi Inari</span> <span class="stay">停留 1.5 小時</span></h3>
+          <p>全日本稻荷神社的總本宮，數千座朱紅鳥居連成的「千本鳥居」沿山蜿蜒，是京都最震撼的畫面之一。清晨鳥居隧道幾乎無人。</p>
+          <span class="tip"><b>提示</b>　走到「四辻」展望點約 30–40 分鐘上坡可折返，無需登頂。</span>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hop"><span><b>伏見稻荷</b> → 錦市場：京阪「伏見稻荷」站搭本線回「祇園四條」站，步行約 8 分至四條通北側錦市場</span><span class="min">電車 30 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hirousu%20in%20Nishiki%20market%2C%20Kyoto.JPG?width=480" alt="錦市場攤販" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>錦市場 <span class="rom">Nishiki Market</span> <span class="stay">停留 1.5 小時</span></h3>
+          <p>有「京都的廚房」之稱的有頂市場街，四百年歷史，醃漬物、湯葉、玉子燒、海鮮串邊走邊吃，順道解決午餐。就在你住宿旁的四條通上。</p>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hop"><span><b>錦市場</b> → 金閣寺：走回四條河原町巴士站搭市巴士 59 號，至「金閣寺道」站下車步行 3 分</span><span class="min">巴士 45 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kinkaku-ji%20%28Golden%20Pavillon%29.jpg?width=480" alt="金閣寺與鏡湖池" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>金閣寺 <span class="rom">Kinkaku-ji</span> <span class="stay">停留 1 小時</span></h3>
+          <p>正名鹿苑寺。三層樓閣中上兩層貼滿金箔，倒映於鏡湖池上熠熠生輝，是京都最華麗的一幀。從市區搭公車即達，行程輕鬆。</p>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+    </div>
+    <div class="note-pick">
+      <b>關於原行程的「金閣寺／貴船」</b>：兩地分屬西北與北方山區、方向相反，同日無法兼顧。本行程已為你<b>定為金閣寺</b>──距離市區近、搭公車可達，與伏見稻荷、錦市場串起來最順、最不趕。貴船較適合留待下回，搭配鞍馬健行專程造訪。
+    </div>
+  </section>
+
+  <!-- DAY 4 -->
+  <section class="day" id="day4">
+    <div class="day-head">
+      <div class="day-num">DAY<b>4</b></div>
+      <div class="day-title">
+        <h2>嵐山竹徑・回阪採買</h2>
+        <div class="sub">ARASHIYAMA · 渡月橋 · 大阪購物</div>
+      </div>
+      <div class="day-date"><span>六月</span><b>19</b><span>週五</span></div>
+    </div>
+
+    <div class="schedule">
+      <div class="sched-row"><span class="t">07:30</span><span class="a">退房，行李寄放京都站或嵐山站置物櫃</span><span class="d">約 20 分</span></div>
+      <div class="sched-row move"><span class="t">08:00</span><span class="a">阪急「京都河原町」站 → 「桂」轉嵐山線 → 「嵐山」站＋步行</span><span class="d">約 30 分</span></div>
+      <div class="sched-row"><span class="t">09:00</span><span class="a">竹林小徑</span><span class="d">約 40 分</span></div>
+      <div class="sched-row"><span class="t">09:45</span><span class="a">天龍寺</span><span class="d">約 1 小時</span></div>
+      <div class="sched-row"><span class="t">10:50</span><span class="a">渡月橋＋嵐山街區（散步＋午餐）</span><span class="d">約 2 小時</span></div>
+      <div class="sched-row move"><span class="t">13:00</span><span class="a">嵐山 → 難波（阪急嵐山線→桂→京都線→梅田→地鐵御堂筋線）</span><span class="d">約 1 小時</span></div>
+      <div class="sched-row"><span class="t">14:30</span><span class="a">難波／心齋橋採買（住難波）</span><span class="d">約 3 小時</span></div>
+      <div class="sched-row"><span class="t">17:30</span><span class="a">晚餐＋整理戰利品</span><span class="d">—</span></div>
+    </div>
+
+    <div class="spots">
+      <div class="hop"><span><b>四條河原町（住宿）</b> → 嵐山：阪急「京都河原町」站搭京都線至「桂」站，轉嵐山線至終點「嵐山」站，出站步行 10 分</span><span class="min">電車 30 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Arashiyama%20Bamboo%20Grove%20%28Unsplash%29.jpg?width=480" alt="嵐山竹林小徑" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>嵐山竹林小徑 <span class="rom">Bamboo Grove</span> <span class="stay">停留 40 分</span></h3>
+          <p>高聳的孟宗竹夾道成綠色長廊，風過沙沙作響。清晨光線斜射穿竹，是最寧靜也最美的時刻。</p>
+          <span class="tip"><b>提示</b>　越早到越好，9 點後旅行團與人力車湧入，就難拍到無人的竹徑。</span>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hop"><span><b>竹林</b> → 天龍寺：竹林南端即接天龍寺北門，約 3 分鐘</span><span class="min">步行 3 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/20160402%20Arashiyama%201820%20%2826708040535%29.jpg?width=480" alt="天龍寺曹源池庭園" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>天龍寺 <span class="rom">Tenryu-ji</span> <span class="stay">停留 1 小時</span></h3>
+          <p>世界遺產禪寺，曹源池庭園借嵐山與龜山為背景，是日本最早獲指定的史蹟特別名勝庭園，四季皆景。</p>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hop"><span><b>天龍寺</b> → 渡月橋：出正門沿嵐山主街往南，約 8 分鐘</span><span class="min">步行 8 分</span></div>
+      <div class="spot">
+        <div class="spot-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Togetsukyo%20in%20Kyoto%20Arashiyama.jpg?width=480" alt="渡月橋" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3>渡月橋 <span class="rom">Togetsukyo</span> <span class="stay">含午餐 2 小時</span></h3>
+          <p>橫跨桂川的木橋，背倚青山的開闊景致，是嵐山的地標。橋畔散步、買支抹茶霜淇淋，為京都行收尾。</p>
+          <span class="tip"><b>提示</b>　嵐山到大阪市區約 50 分以上，務必下午 1 點前離開，回阪採買才從容。</span>
+          <div class="photo-credit">Photo: Wikimedia Commons</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY 5 -->
+  <section class="day" id="day5">
+    <div class="day-head">
+      <div class="day-num">DAY<b>5</b></div>
+      <div class="day-title">
+        <h2>難波・賦歸</h2>
+        <div class="sub">NAMBA → KIX · 返回台灣</div>
+      </div>
+      <div class="day-date"><span>六月</span><b>20</b><span>週六</span></div>
+    </div>
+
+    <div class="schedule">
+      <div class="sched-row"><span class="t">09:30</span><span class="a">退房、難波周邊早餐</span><span class="d">約 1 小時</span></div>
+      <div class="sched-row"><span class="t">10:30</span><span class="a">最後採買／藥妝補貨</span><span class="d">約 1 小時</span></div>
+      <div class="sched-row move"><span class="t">11:45</span><span class="a">難波 → 關西機場（rapi:t）</span><span class="d">約 38 分</span></div>
+      <div class="sched-row"><span class="t">12:30</span><span class="a">抵達機場：報到、退稅、安檢</span><span class="d">預留 2.5 小時</span></div>
+      <div class="sched-row move"><span class="t">15:00</span><span class="a">班機起飛 ✈ 返回桃園</span><span class="d">—</span></div>
+    </div>
+
+    <div class="note-pick">
+      <b>回程時間提醒</b>：下午 3 點的班機，建議 12:30 前抵達機場（提早約 2.5 小時辦理手續與退稅）。從難波搭 rapi:t 最穩，務必 <b>11:45 前上車</b>。rapi:t 需事先劃位，建議先在 KKday／KLOOK 購電子票較划算。
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <h4>Travel Notes · 實用備忘</h4>
+  <div class="tips-grid">
+    <div><strong>京都兩站口訣</strong>住四條河原町：往南往東（伏見稻荷、祇園）走<b>京阪「祇園四條」站</b>；往西往大阪（嵐山、梅田）走<b>阪急「京都河原町」站</b>。</div>
+    <div><strong>交通票券</strong>京都這兩天移動以京阪、阪急、市巴士為主，直接刷 ICOCA 最省事；常搭巴士可加買「市巴士一日券」。</div>
+    <div><strong>機場接駁</strong>難波 ↔ 關西機場搭南海 rapi:t 約 38 分、空港急行約 45 分；rapi:t 需劃位，事先購電子票較省。</div>
+    <div><strong>住宿切換</strong>6/16 與 6/19 住難波、6/17 與 6/18 住四條河原町。6/17 上午從難波移動到京都入住，6/19 嵐山玩完直接回難波。</div>
+    <div><strong>早起策略</strong>清水寺、伏見稻荷、嵐山竹林皆以「清晨無人」為最佳賞玩時段，值得早起。</div>
+    <div><strong>第 3 天巴士</strong>錦市場→金閣寺的市巴士 59 號白天易塞、易客滿，是京都唯一要抓寬鬆時間的一段。</div>
+  </div>
+  <div class="sign">
+    <span>關西五日 · 大阪／京都／嵐山</span>
+    <span>為您悉心規劃 · 旅途愉快</span>
+  </div>
+</footer>
+
+</body>
+</html>
